@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5f05dcdb3d8b863c667cc69fff1b2ead",
+    "hash": "6092a58caab87e949ca13982ca65837e",
     "packages": [
         {
             "name": "guzzlehttp/streams",
@@ -55,6 +55,55 @@
                 "stream"
             ],
             "time": "2015-01-22 00:01:34"
+        },
+        {
+            "name": "symfony/process",
+            "version": "2.8.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process.git",
+                "reference": "8382bc54f1d83ee36fb3983bb1b6b307d238622b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/8382bc54f1d83ee36fb3983bb1b6b307d238622b",
+                "reference": "8382bc54f1d83ee36fb3983bb1b6b307d238622b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "http://symfony.com",
+            "time": "2015-04-24 07:03:44"
         }
     ],
     "packages-dev": [
@@ -168,12 +217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "08c0d7d648efdaa1491ce8f9ad5df4ec79b3d099"
+                "reference": "f4877a09b4210f4cb087823fd2410aee39bdaf02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/08c0d7d648efdaa1491ce8f9ad5df4ec79b3d099",
-                "reference": "08c0d7d648efdaa1491ce8f9ad5df4ec79b3d099",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/f4877a09b4210f4cb087823fd2410aee39bdaf02",
+                "reference": "f4877a09b4210f4cb087823fd2410aee39bdaf02",
                 "shasum": ""
             },
             "require": {
@@ -220,7 +269,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2015-04-23 08:18:32"
+            "time": "2015-04-25 21:18:56"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -474,12 +523,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "43e4df74b8b1b05efac8f9c447f2fb15462a6a41"
+                "reference": "60bbaff8602bd8eaae76196f6427b4b2396c72fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/43e4df74b8b1b05efac8f9c447f2fb15462a6a41",
-                "reference": "43e4df74b8b1b05efac8f9c447f2fb15462a6a41",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/60bbaff8602bd8eaae76196f6427b4b2396c72fb",
+                "reference": "60bbaff8602bd8eaae76196f6427b4b2396c72fb",
                 "shasum": ""
             },
             "require": {
@@ -538,7 +587,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-04-18 08:00:12"
+            "time": "2015-04-18 15:51:25"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -968,28 +1017,28 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "2.8.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f"
+                "reference": "70d4fb2d28a8cef5472b934ee64459f18d99ca5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f",
-                "reference": "4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/70d4fb2d28a8cef5472b934ee64459f18d99ca5d",
+                "reference": "70d4fb2d28a8cef5472b934ee64459f18d99ca5d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.5.9"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~2.7|~3.0.0"
+                "symfony/phpunit-bridge": "~2.8|~3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -1013,7 +1062,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2015-04-24 07:03:44"
+            "time": "2015-04-24 07:12:41"
         }
     ],
     "aliases": [],
@@ -1021,6 +1070,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.3.0"
+    },
     "platform-dev": []
 }

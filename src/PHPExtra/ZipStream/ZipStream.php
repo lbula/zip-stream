@@ -4,6 +4,7 @@ namespace PHPExtra\ZipStream;
 
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * The ZipStream class
@@ -81,7 +82,11 @@ class ZipStream implements StreamInterface
             $absoluteFilenames[] = $realFile;
         }
 
-        return sprintf('zip -0 -j -q -r - %s', implode(' ', $absoluteFilenames));
+        $builder = new ProcessBuilder();
+        $builder->setArguments($absoluteFilenames);
+        $filesToZipList = $builder->getProcess()->getCommandLine();
+
+        return sprintf('zip -0 -j -q -r - %s', $filesToZipList);
     }
 
     /**
