@@ -17,9 +17,19 @@ class ZipStreamTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function getLoggerMock()
+    {
+        return $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
+    }
+
+    /**
+     * @expectedException RuntimeException
+     */
     public function testCreateZipStreamInstance()
     {
-        new \PHPExtra\ZipStream\ZipStream(array());
+        /** @var Psr\Log\LoggerInterface $logger */
+        $logger = $this->getLoggerMock();
+        new \PHPExtra\ZipStream\ZipStream(array(), $logger);
     }
 
     /**
@@ -29,8 +39,28 @@ class ZipStreamTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateNewZipStreamFromTestFiles(array $files)
     {
-        $stream = new \PHPExtra\ZipStream\ZipStream($files);
+        /** @var Psr\Log\LoggerInterface $logger */
+        $logger = $this->getLoggerMock();
+        $stream = new \PHPExtra\ZipStream\ZipStream($files, $logger);
         $this->assertEquals(517, strlen($stream->getContents()), 'Stream has wrong length');
+    }
+
+    /**
+     * @dataProvider testFilesProvider
+     *
+     * @param array $files
+     */
+    public function testCreateNewZipStreamFromTestFilesIncremental(array $files)
+    {
+        /** @var Psr\Log\LoggerInterface $logger */
+        $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
+        $stream = new \PHPExtra\ZipStream\ZipStream($files, $logger);
+        $tmp = '';
+        while (!$stream->eof()){
+            $tmp .= $stream->read(100);
+        }
+        $stream->close();
+        $this->assertEquals(517, strlen($tmp), 'Stream has wrong length');
     }
 
     /**
@@ -40,7 +70,9 @@ class ZipStreamTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateZipStreamInstanceUsingFactoryMethod(array $files)
     {
-        $stream = \PHPExtra\ZipStream\ZipStream::create($files);
+        /** @var Psr\Log\LoggerInterface $logger */
+        $logger = $this->getLoggerMock();
+        $stream = \PHPExtra\ZipStream\ZipStream::create($files, $logger);
         $this->assertInstanceOf('\PHPExtra\ZipStream\ZipStream', $stream);
     }
 
@@ -51,7 +83,9 @@ class ZipStreamTest extends \PHPUnit_Framework_TestCase
      */
     public function testZipStreamIsNotSeekable(array $files)
     {
-        $stream = \PHPExtra\ZipStream\ZipStream::create($files);
+        /** @var Psr\Log\LoggerInterface $logger */
+        $logger = $this->getLoggerMock();
+        $stream = \PHPExtra\ZipStream\ZipStream::create($files, $logger);
         $this->assertFalse($stream->isSeekable());
     }
 
@@ -62,8 +96,9 @@ class ZipStreamTest extends \PHPUnit_Framework_TestCase
      */
     public function testZipStreamIsNotWritable(array $files)
     {
-        $stream = \PHPExtra\ZipStream\ZipStream::create($files);
+        /** @var Psr\Log\LoggerInterface $logger */
+        $logger = $this->getLoggerMock();
+        $stream = \PHPExtra\ZipStream\ZipStream::create($files, $logger);
         $this->assertFalse($stream->isWritable());
     }
-
 }

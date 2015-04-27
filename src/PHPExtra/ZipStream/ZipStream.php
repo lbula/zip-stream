@@ -5,6 +5,7 @@ namespace PHPExtra\ZipStream;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Stream\StreamInterface;
 use Symfony\Component\Process\ProcessBuilder;
+use Psr\Log\LoggerInterface;
 
 /**
  * The ZipStream class
@@ -34,10 +35,24 @@ class ZipStream implements StreamInterface
     private $stream = null;
 
     /**
-     * @param array $files
+     * @var LoggerInterface $logger
      */
-    function __construct(array $files)
+    private $logger;
+
+    /**
+     * @param array $files
+     * @param LoggerInterface $logger
+     */
+    function __construct(array $files, LoggerInterface $logger)
     {
+        $this->setLogger($logger);
+
+        if (empty($files)) {
+            $failedMessage = 'Empty input file list';
+            $this->getLogger()->error(__METHOD__ . ': ' . $failedMessage);
+            throw new \RuntimeException($failedMessage);
+        }
+
         $this->files = $files;
     }
 
@@ -57,7 +72,9 @@ class ZipStream implements StreamInterface
             $this->process = proc_open($command, $descriptors, $this->pipes);
 
             if($this->process === false){
-                throw new \RuntimeException(sprintf('Unable to create process: %s', $command));
+                $failedMessage = sprintf('Unable to create process: %s', $command);
+                $this->getLogger()->error(__METHOD__ . ': ' . $failedMessage);
+                throw new \RuntimeException($failedMessage);
             }
 
             $this->stream = Stream::factory($this->pipes[1]);
@@ -77,7 +94,9 @@ class ZipStream implements StreamInterface
             $realFile = realpath($file);
 
             if($realFile === false){
-                throw new \RuntimeException(sprintf('File does not exist: %s', $file));
+                $failedMessage = sprintf('File does not exist: %s', $file);
+                $this->getLogger()->error(__METHOD__ . ': ' . $failedMessage);
+                throw new \RuntimeException($failedMessage);
             }
             $absoluteFilenames[] = $realFile;
         }
@@ -93,12 +112,13 @@ class ZipStream implements StreamInterface
      * Create new ZipStream
      *
      * @param array $files
+     * @param LoggerInterface $logger
      *
      * @return $this
      */
-    public static function create(array $files)
+    public static function create(array $files, LoggerInterface $logger)
     {
-        return new self($files);
+        return new self($files, $logger);
     }
 
     /**
@@ -222,5 +242,21 @@ class ZipStream implements StreamInterface
     public function getMetadata($key = null)
     {
         return $this->getStream()->getMetadata();
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    private function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    private function getLogger()
+    {
+        return $this->logger;
     }
 }
